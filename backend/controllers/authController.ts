@@ -2,7 +2,6 @@ const errorHandler = require("../utils/errorHandler");
 import { catchAsyncErrors } from '../middlewares/index';
 import oracledb from 'oracledb';
 import { dbConnection, database } from '../config/index';
-import { getJWTToken } from '../models/index';
 import { sendToken } from '../utils/index';
 
 const errorMessage = "Something went wrong please try again.";
@@ -42,8 +41,6 @@ export const loginUser = catchAsyncErrors(async (req: any, res: any, next: any) 
         if (user?.activeFlag === 'N') {
             return next(new errorHandler("UserId is not Active.", "99", "-99", "Data Validation Failed.", "UserId is not Active.", 400));
         }
-        let token = getJWTToken(userID);
-        user = { ...user, token }
     } catch (err) {
         console.log(err);
         return next(new errorHandler("", "", "", "Database Connection Refused.", err, 400));
@@ -58,3 +55,4 @@ export const loginUser = catchAsyncErrors(async (req: any, res: any, next: any) 
     };
     return sendToken(user, 200, res);
 });
+
