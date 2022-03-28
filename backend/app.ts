@@ -1,12 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {error as errorMiddleware} from './middlewares/index';
-// const cookieParse =  require('cookie-parser')
 const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
-// app.use(cookieParse());
 
 //route
 const auth = require('./routes/auth');
@@ -15,11 +13,5 @@ const auth = require('./routes/auth');
 
 app.use('/auth',auth);
 
-//app.use('/los',los);
-//app.use('/crm',crm);
-
 app.use(errorMiddleware);
-
-  
-
 module.exports = app;
